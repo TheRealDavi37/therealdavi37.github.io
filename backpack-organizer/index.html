@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Backpack Configurator Pro</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header>
+        <h1>Backpack Organizer</h1>
+        <p>Design your ultimate everyday carry and organize your gear.</p>
+      </header>
+
+      <main class="workspace">
+        <!-- Left panel: Draggable Items -->
+        <section class="panel inventory-section">
+          <h2>Your Items</h2>
+          <div class="inventory drop-zone" id="inventory-zone">
+            <div class="drop-area base-inventory">
+              <!-- JS injects 15 dynamic items here -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Middle panel: Builder / Configurator -->
+        <section class="panel builder-section">
+          <h2>Specifications</h2>
+
+          <div class="builder-group">
+            <label class="group-label">Base Type</label>
+            <div class="radio-group" id="type-selector">
+              <label class="radio-choice">
+                <input type="radio" name="bp-type" value="Normal" checked />
+                <span class="radio-custom"></span> Normal Backpack
+              </label>
+              <label class="radio-choice">
+                <input type="radio" name="bp-type" value="Trolley" />
+                <span class="radio-custom"></span> Trolley Tracker
+              </label>
+            </div>
+          </div>
+
+          <div class="builder-group">
+            <label class="group-label">Add Compartment / Pocket</label>
+            <div class="add-controls">
+              <select id="pocket-type" class="custom-select">
+                <option value="small">Small Pocket</option>
+                <option value="main-2">Main (Divided in 2)</option>
+                <option value="main-3">Main (Divided in 3)</option>
+                <option value="bottle">Bottle Holder</option>
+                <option value="umbrella">Umbrella Sleeve</option>
+              </select>
+              <button class="btn btn-primary" id="add-pocket-btn">+ Add</button>
+            </div>
+          </div>
+
+          <div class="builder-actions">
+            <button class="btn btn-danger" id="reset-bp-btn">
+              Reset All Compartments
+            </button>
+          </div>
+        </section>
+
+        <!-- Right panel: Backpack Visualization -->
+        <section class="panel backpack-section">
+          <div class="backpack-display-header">
+            <h2>Your <span id="bp-type-label">Normal</span> Backpack</h2>
+          </div>
+
+          <div class="image-wrapper">
+            <!-- Displayed the requested image here -->
+            <img
+              src="backpack.jpg"
+              alt="Backpack Reference Image"
+              class="backpack-image"
+              onerror="this.style.display = 'none'"
+            />
+
+            <div class="backpack-overlay-info">
+              <span class="bp-badge">Ready to Load</span>
+            </div>
+          </div>
+
+          <div class="backpack-container" id="backpack-pockets">
+            <!-- Configured Drop zones will inject here dynamically -->
+            <div class="empty-state">
+              <p>
+                No pockets added yet. <br />Use the specifications panel to
+                build your backpack.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

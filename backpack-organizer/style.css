@@ -1,0 +1,452 @@
+:root {
+    --bg-dark: #0f172a;
+    --bg-card: rgba(30, 41, 59, 0.7);
+    --bg-card-hover: rgba(30, 41, 59, 0.9);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --accent-color: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.5);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --success-color: #10b981;
+    --success-glow: rgba(16, 185, 129, 0.4);
+    --danger-color: #ef4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: block;
+    padding-bottom: 4rem;
+}
+
+.app-container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #c084fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* 3-Column Workspace */
+.workspace {
+    display: grid;
+    grid-template-columns: 300px 350px 1fr;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+/* Normal flowing columns as requested */
+.inventory-section, .builder-section {
+    position: relative;
+}
+
+/* Custom scrollbar for sticky panels */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+
+.panel {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+/* -- Panel 1: Inventory -- */
+.inventory-section {
+    position: relative;
+}
+.base-inventory {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    min-height: 200px;
+    height: 100%;
+}
+
+.draggable-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+    cursor: grab;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+}
+
+.draggable-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.draggable-item:active {
+    cursor: grabbing;
+    transform: scale(0.98);
+}
+
+.draggable-item.dragging {
+    opacity: 0.5;
+    border: 1px dashed var(--text-secondary);
+}
+
+/* Items Dynamic Styles */
+.icon-img {
+    background: rgba(0, 0, 0, 0.2);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 0.3rem;
+}
+
+.icon-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.item-details { display: flex; flex-direction: column; }
+.item-name { font-weight: 600; font-size: 0.95rem; }
+.item-size-badge { font-size: 0.75rem; color: var(--text-secondary); background: rgba(0,0,0,0.3); padding: 0.2rem 0.4rem; border-radius: 4px; margin-top: 0.2rem; display: inline-block; }
+
+/* -- Panel 2: Builder -- */
+.builder-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.group-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background: rgba(0,0,0,0.2);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.radio-choice {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.radio-choice input {
+    accent-color: var(--accent-color);
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+}
+
+.add-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.custom-select {
+    flex: 1;
+    background: rgba(0,0,0,0.3);
+    color: white;
+    border: 1px solid var(--border-color);
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.custom-select:focus {
+    border-color: var(--accent-color);
+}
+
+.custom-select option {
+    background: var(--bg-dark);
+    color: white;
+}
+
+.btn {
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-primary {
+    background: var(--accent-color);
+    color: white;
+}
+.btn-primary:hover {
+    background: #2563eb;
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.btn-danger {
+    background: transparent;
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
+    width: 100%;
+    margin-top: 1rem;
+}
+.btn-danger:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.builder-actions {
+    margin-top: auto;
+}
+
+/* -- Panel 3: Backpack View -- */
+.backpack-display-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#bp-type-label {
+    background: linear-gradient(135deg, #10b981, #3b82f6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border-color);
+}
+
+.backpack-image {
+    width: 100%;
+    max-height: 250px;
+    object-fit: contain; /* ensures image aspect ratio is intact */
+    object-position: center;
+    display: block;
+}
+
+.backpack-overlay-info {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.bp-badge {
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.backpack-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows pockets to stack / wrap nicely */
+    gap: 1rem;
+    position: relative;
+}
+
+.empty-state {
+    width: 100%;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-secondary);
+    background: rgba(0,0,0,0.1);
+    border-radius: 12px;
+    border: 1px dashed var(--border-color);
+}
+
+/* Drop Zone Compartments */
+.compartment {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 120px;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.3s ease-out;
+    flex: 1 1 100%; /* Default full width */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.compartment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding-bottom: 0.5rem;
+}
+
+.compartment h3 { font-size: 0.95rem; font-weight: 500; color: var(--text-primary); }
+.capacity { font-size: 0.7rem; background: rgba(255,255,255,0.1); padding: 0.2rem 0.5rem; border-radius: 10px; color: var(--text-secondary); }
+
+.drop-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    flex: 1;
+    min-height: 80px;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.drop-zone.drag-over .drop-area {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.drop-zone.drag-over {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* Red denied glow */
+.drop-zone.drag-deny {
+    border-color: var(--danger-color);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+/* Usage Meters */
+.usage-meter {
+    height: 6px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    margin-top: auto;
+    overflow: hidden;
+}
+
+.usage-fill {
+    height: 100%;
+    background: var(--accent-color);
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+/* Layout variants for specific pocket types */
+.main-multi-zone {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+    min-height: 120px;
+}
+
+.sub-drop-zone {
+    flex: 1;
+    border: 1px dashed rgba(255,255,255,0.2);
+    border-radius: 8px;
+    min-height: 80px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: 0.3s;
+}
+
+.sub-drop-zone.drag-over {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: var(--success-color);
+}
+
+/* Specific Compartment Sizes */
+.comp-small { flex: 1 1 calc(50% - 0.5rem); min-height: 180px; }
+.comp-main { flex: 1 1 100%; }
+.comp-bottle { flex: 1 1 calc(50% - 0.5rem); border-left: 3px solid #3b82f6; min-height: 180px;}
+.comp-umbrella { flex: 1 1 calc(50% - 0.5rem); border-left: 3px solid #8b5cf6; min-height: 180px;}
+
+.sub-zone-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    border-bottom: 1px dotted rgba(255,255,255,0.1);
+    padding-bottom: 0.3rem;
+}
+
+@media (max-width: 1024px) {
+    .workspace {
+        grid-template-columns: 1fr;
+    }
+}
